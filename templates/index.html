@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SendAnywhere Clone</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <div class="logo">Share Now</div>
+      <a href="#contact" class="con">Contact</a>
+    </div>
+  </nav>
+  
+  <!-- Overlay for popup -->
+  <div id="overlay" onclick="hideScanPopup()"></div>
+
+  <div id="main">
+    <div id="send">
+      <h1>Send File</h1>
+      <input type="file" id="fileInput" />
+      <div id="s1"><button onclick="uploadFile()">Upload</button></div>
+      <p id="codeDisplay"></p>
+    </div>
+
+    <div id="Receive">
+      <h1>Receive File</h1>
+      <input type="text" id="codeInput" placeholder="Enter 6-digit code" />
+      <div id="r1"><button onclick="downloadFile()">Download</button></div>
+      <p id="codeDisplay"></p>
+    </div>
+  </div>
+
+  <!-- QR Code Popup -->
+  <div id="scan">
+    <div id="qrCodeSection">
+      <h2>QR Code</h2>
+      <img id="qrCodeImage" src="" alt="QR Code" />
+      <p>Transfer Code: <span id="transferCode"></span></p>
+      <button id="copyCodeButton" onclick="copyCode()">Copy Code</button>
+    </div>
+    <p id="expiryTime"></p>
+    <p id="encryptionMessage"></p>
+  </div>
+
+  <!--histroy-->
+  <div id="history">
+    <p><h2>History</h2><br>Reload for getting the detailes</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Sender IP</th>
+          <th>Receiver IP</th>
+          <th>File</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for entry in history %}
+        <tr>
+          <td>{{ entry.sender_ip }}</td>
+          <td>{{ entry.receiver_ip }}</td>
+          <td>{{ entry.filename }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!--footer-->
+  <div class="contact-container">
+    <div class="contact-footer" id="contact">
+      <h2>Contact Me</h2>
+      <form class="contact-form">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="tel" name="phone" placeholder="Mobile Number" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <textarea name="message" placeholder="Write your message here..." required></textarea>
+        <button type="submit">Submit</button>
+      </form>
+      
+      <div class="end">BY YESURI LOK NAGENDRA YADAV</div>
+    </div>
+  </div>
+
+  <script src="/static/js/script.js"></script>
+</body>
+</html>
