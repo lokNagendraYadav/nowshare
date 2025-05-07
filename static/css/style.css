@@ -435,10 +435,4 @@ nav .con:hover {
   }
 }
 /*don know ill work or not*/
-input[type="file"],
-input[type="text"],
-button {
-  width: 100%;
-  max-width: none; /* removes 300px constraint */
-  box-sizing: border-box; /* includes padding in width */
-}
+
