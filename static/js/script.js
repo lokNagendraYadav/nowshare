@@ -160,4 +160,16 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+//code auto pastte
+function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
 
+    // When the page loads, populate the "codeInput" field
+    window.onload = function() {
+        const code = getQueryParam('code'); // Get the code from the URL
+        if (code) {
+            document.getElementById('codeInput').value = code; // Set the value in the input
+        }
+    };
