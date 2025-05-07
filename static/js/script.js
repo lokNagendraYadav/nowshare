@@ -149,4 +149,15 @@ function startCountdown(durationInSeconds) {
         remaining--;
     }, 1000);
 }
+//qr
+window.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    if (code) {
+        const receiveInput = document.getElementById('receiveCode');
+        if (receiveInput) {
+            receiveInput.value = code;
+        }
+    }
+});
 
