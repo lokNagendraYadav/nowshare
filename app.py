@@ -19,11 +19,21 @@ def generate_key():
     return Fernet.generate_key()
 
 def generate_qr_code(code):
-    img = qrcode.make(code)
+    # Create the URL with the code as a query parameter
+    url_with_code = f"https://nowshare.onrender.com/?code={code}"
+
+    # Generate QR code with the URL
+    img = qrcode.make(url_with_code)
+
+    # Save the QR code image to a BytesIO object
     img_io = BytesIO()
     img.save(img_io, 'PNG')
     img_io.seek(0)
+
+    # Convert the image to base64 encoding
     img_base64 = base64.b64encode(img_io.getvalue()).decode('utf-8')
+
+    # Return the base64 string as a data URL
     return f"data:image/png;base64,{img_base64}"
 
 @app.route('/')
