@@ -60,7 +60,6 @@ h1 {
 input[type="file"], input[type="text"] {
   margin: 10px 0;
   width: 100%;
-  max-width: 300px;
   padding: 12px;
   display: block;
   margin-left: auto;
@@ -69,6 +68,7 @@ input[type="file"], input[type="text"] {
   border-radius: 5px;
   font-size: 1rem;
   transition: border-color 0.3s;
+  box-sizing: border-box; /* ADD THIS */
 }
 
 input[type="file"]:focus, input[type="text"]:focus {
@@ -432,4 +432,12 @@ nav .con:hover {
   .contact-form button {
     width: 100%;
   }
+}
+/*don know ill work or not*/
+input[type="file"],
+input[type="text"],
+button {
+  width: 100%;
+  max-width: none; /* removes 300px constraint */
+  box-sizing: border-box; /* includes padding in width */
 }
