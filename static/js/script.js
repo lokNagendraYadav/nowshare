@@ -1,4 +1,7 @@
 async function uploadFile() {
+    document.getElementById("uploadPopup").style.display = "block";
+observeQRDisplay();  // to monitor QR visibility
+
     const fileInput = document.getElementById("fileInput");
     if (!fileInput.files.length) {
         alert("Please select a file to upload.");
@@ -160,4 +163,18 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
-//database connection
+//popup mess
+function observeQRDisplay() {
+  const scanSection = document.getElementById("scan");
+  const popup = document.getElementById("uploadPopup");
+
+  const observer = new MutationObserver(() => {
+    const qrImage = document.getElementById("qrCodeImage");
+    if (qrImage && qrImage.src && qrImage.src.trim() !== "") {
+      popup.style.display = "none";
+      observer.disconnect();
+    }
+  });
+
+  observer.observe(scanSection, { childList: true, subtree: true });
+}
