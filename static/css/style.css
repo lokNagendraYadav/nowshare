@@ -1,103 +1,184 @@
 /* General styles */
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: rgb(241, 216, 182);
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: auto;
   flex-direction: column;
-  box-sizing: border-box;
-  
+  align-items: center;
 }
 
+/* NAVIGATION */
+nav {
+  position: fixed;
+  top: 8px;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  z-index: 1000;
+  height: 60px;
+  border-radius: 10px;
+  margin: 0 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 20px;
+}
+
+nav .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+nav .con {
+  background-color: #f4b400;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+nav .con:hover {
+  background-color: #f39c12;
+}
+
+/* MAIN */
 #main {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
-  padding: 40px;
+  gap: 30px;
+  padding: 100px 20px 40px;
+  width: 100%;
   max-width: 1200px;
-  width: 80%;
-  height: auto;
-  box-sizing: border-box;
   background-color: rgb(245, 244, 244);
   border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
-  margin-top: 180px;
-  padding-top: 70px;
+  margin-top: 100px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Send and Receive boxes */
 #send, #Receive {
-  background-color: #ffffff;
-  border-radius: 10px;
-  text-align: center;
-  padding: 30px;
-  margin: 10px;
-  width: calc(48% - 2%);
-  box-sizing: border-box;
-  min-width: 350px;
-  max-width: 100%;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   background: linear-gradient(135deg, #ffcccb, #ffebd4);
+  border-radius: 10px;
+  padding: 25px;
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
   border: 2px solid wheat;
-  
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-  font-size: 2.5rem;
-  color: #333;
+  font-size: 2rem;
   margin-bottom: 20px;
-  font-weight: bold;
-  letter-spacing: 1px;
+  color: #333;
 }
 
-input[type="file"], input[type="text"] {
-  margin: 10px 0;
+input[type="file"],
+input[type="text"] {
   width: 100%;
   max-width: 300px;
   padding: 12px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 10px auto;
   border: 2px solid #ddd;
   border-radius: 5px;
   font-size: 1rem;
-  transition: border-color 0.3s;
-  box-sizing: border-box; /* ADD THIS */
+  display: block;
 }
 
-input[type="file"]:focus, input[type="text"]:focus {
+input[type="file"]:focus,
+input[type="text"]:focus {
   border-color: #007BFF;
 }
 
 button {
+  width: 100%;
+  max-width: 250px;
+  padding: 12px;
+  margin-top: 10px;
   background-color: #007BFF;
   color: white;
   border: none;
-  padding: 12px 20px;
-  font-size: 1.2rem;
-  cursor: pointer;
   border-radius: 5px;
-  margin-top: 10px;
-  transition: background-color 0.3s;
-  width: 100%;
-  max-width: 250px;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 button:hover {
   background-color: #0056b3;
 }
 
-#codeDisplay, #expiryTime {
-  font-size: 1.2rem;
-  margin-top: 20px;
+#codeDisplay,
+#expiryTime {
+  margin-top: 15px;
+  font-size: 1rem;
   color: #333;
+}
+
+/* Upload Popup */
+#uploadPopup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #222;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 9999;
+}
+
+/* QR Code Section */
+#scan {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+  z-index: 9999;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  max-width: 90%;
+  width: 350px;
+  text-align: center;
+}
+
+#qrCodeImage {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+#overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9990;
+}
+
+#encryptionMessage {
+  margin-top: 15px;
+  color: green;
+  font-weight: bold;
 }
 
 /* Copy Animation */
@@ -115,300 +196,109 @@ button.copied {
 }
 
 @keyframes shakeAnimation {
-  0% { transform: translateX(0); }
+  0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-5px); }
   50% { transform: translateX(5px); }
   75% { transform: translateX(-5px); }
-  100% { transform: translateX(0); }
 }
 
-/* Mobile Responsive */
-@media screen and (max-width: 768px) {
-  body {
-    padding: 20px;
-  }
-
-  #main {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  #send, #Receive {
-    width: 100%;
-    min-width: 280px;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  button {
-    width: 100%;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  body {
-    padding: 10px;
-  }
-
-  #send, #Receive {
-    padding: 15px;
-  }
-
-  h1 {
-    font-size: 1.2rem;
-  }
-
-  input[type="file"], button {
-    font-size: 0.9rem;
-    padding: 8px;
-  }
-
-  #codeDisplay, #expiryTime {
-    font-size: 0.9rem;
-  }
-}
-
-/* Popup and Overlay */
-#scan {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  border-radius: 10px;
-  padding: 30px;
-  z-index: 9999;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-  display: none;
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-}
-
-#overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9990;
-  display: none;
-}
-
-#qrCodeImage {
-  max-width: 100%;
-  height: auto;
-  margin-top: 10px;
-}
-
-#encryptionMessage {
-  margin-top: 20px;
-  color: green;
-  font-weight: bold;
-}
-/*nav*/
-nav {
-  
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 0px 20px;
-  margin: 0 20px; /* Adds space to left and right of the whole navbar box */
-  color: white;
-  position: fixed;
-  top: 8px;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px; /* Optional: gives rounded corners if desired */
-  height: 60px;
-}
-
-.nav-container {
- 
-  margin: 0 auto;
-  padding: 10px 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-nav .logo {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-nav .con {
-  background-color: #f4b400;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-nav .con:hover {
-  background-color: #f39c12;
-}
-/*histroy*/
-/* History container */
+/* HISTORY */
 #history {
-  margin-top: 10%; /* Space from main content */
+  width: 95%;
+  margin: 60px auto 0;
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-  clear: both;
 }
 
-/* Title for History section */
 #history h2 {
   text-align: center;
-  font-size: 24px;
   color: #333;
   margin-bottom: 20px;
 }
 
-/* Table Styling */
 #history table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  font-size: 0.95rem;
 }
 
-/* Table headers */
 #history th {
-  padding: 12px;
   background-color: #333;
   color: white;
+  padding: 12px;
   text-align: left;
-  font-weight: bold;
 }
 
-/* Table rows */
 #history td {
   padding: 12px;
   border: 1px solid #ddd;
-  text-align: left;
 }
 
-/* Hover effect on rows */
 #history tr:hover {
   background-color: #f2f2f2;
 }
 
-/* Even row styling */
 #history tr:nth-child(even) {
   background-color: #fafafa;
 }
 
-/* Last row padding */
-#history tr:last-child td {
-  border-bottom: none;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  #history {
-    width: 100%;
-    padding: 15px;
-  }
-
-  #history table {
-    font-size: 14px;
-  }
-
-  #history th, #history td {
-    padding: 10px;
-  }
-}
-#historyContainer {
-  margin-top: 30px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  max-height: 300px;
-  overflow-y: auto;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  font-family: Arial, sans-serif;
-}
-
-.history-entry {
-  padding: 10px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid #ddd;
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  
-}
-/*footer*/
-/* General styles */
+/* FOOTER */
 .contact-container {
   width: 100%;
-  padding: 20px 20px;
+  padding: 40px 20px;
   background: linear-gradient(135deg, #ffcccb, #ffebd4);
-  box-sizing: border-box;
   margin-top: 60px;
+  box-sizing: border-box;
 }
 
 .contact-footer {
   background-color: #ffffff;
-  border-radius: 15px;
   max-width: 600px;
   margin: 0 auto;
   padding: 40px;
+  border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .contact-footer h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
   text-align: center;
+  margin-bottom: 20px;
   color: #333;
+  font-size: 1.8rem;
 }
 
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
 .contact-form input,
 .contact-form textarea {
   width: 100%;
   padding: 12px;
-  border: 2px solid #ccc;
   border-radius: 5px;
+  border: 2px solid #ccc;
   font-size: 1rem;
-  box-sizing: border-box;
 }
 
 .contact-form textarea {
-  resize: vertical;
   min-height: 150px;
+  resize: vertical;
 }
 
 .contact-form button {
   background-color: #007BFF;
   color: white;
-  border: none;
-  padding: 12px 20px;
   font-size: 1rem;
-  cursor: pointer;
+  border: none;
   border-radius: 5px;
-  width: 100%;
+  padding: 12px;
+  cursor: pointer;
   max-width: 200px;
   margin: 0 auto;
-  transition: background-color 0.3s;
 }
 
 .contact-form button:hover {
@@ -416,23 +306,64 @@ nav .con:hover {
 }
 
 .end {
-  margin-top: 20px;
   text-align: center;
-  font-size: 1rem;
-  color: #444;
+  margin-top: 20px;
   font-weight: bold;
-  letter-spacing: 0.5px;
+  color: #444;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* RESPONSIVENESS */
+@media screen and (max-width: 768px) {
+  #main {
+    flex-direction: column;
+    padding: 80px 15px 30px;
+  }
+
+  nav .logo {
+    font-size: 1.2rem;
+  }
+
+  nav .con {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  button {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  #history table {
+    font-size: 0.85rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  input[type="file"],
+  input[type="text"],
+  button {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
   .contact-footer {
-    padding: 30px;
+    padding: 20px;
   }
 
-  .contact-form button {
-    width: 100%;
+  #send,
+  #Receive {
+    padding: 20px;
+  }
+
+  nav .logo {
+    font-size: 1rem;
   }
 }
-/*don know ill work or not*/
-
