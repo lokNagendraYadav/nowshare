@@ -43,7 +43,8 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload():
     file = request.files['file']
-    sender_ip = request.remote_addr  # Get sender's IP address
+    sender_ip = request.headers.get('X-Forwarded-For', request.remote_addr).split(',')[0].strip()
+  # Get sender's IP address
     code = ''.join(random.choices(string.digits, k=6))
     
     original_filename = secure_filename(file.filename)  # Sanitize filename
@@ -75,7 +76,8 @@ def upload():
 def download(code):
     path = codes.get(code)
     key = keys.get(code)
-    receiver_ip = request.remote_addr  # Get receiver's IP address
+    receiver_ip = request.headers.get('X-Forwarded-For', request.remote_addr).split(',')[0].strip()
+  # Get receiver's IP address
 
     if path and key and os.path.exists(path):
         fernet = Fernet(key)
