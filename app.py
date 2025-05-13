@@ -8,6 +8,10 @@ from werkzeug.utils import secure_filename
 from pymongo import MongoClient
 
 app = Flask(__name__)
+client = MongoClient("mongodb+srv://portfolio:Mischieff%402411@cluster0.nuugfcv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+db = client["portfolio"]
+contact_collection = db["contacts"]
+
 UPLOAD_FOLDER = 'uploads'
 codes = {}
 keys = {}
@@ -113,6 +117,27 @@ def download(code):
 @app.route('/get_history', methods=['GET'])
 def get_history():
     return jsonify(history)  
+
+#contact info
+@app.route('/submit_contact', methods=['POST'])
+def submit_contact():
+    name = request.form.get('name')
+    phone = request.form.get('phone')
+    email = request.form.get('email')
+    message = request.form.get('message')
+
+    if not all([name, phone, email, message]):
+        return "All fields are required", 400
+
+    contact_collection.insert_one({
+        "name": name,
+        "phone": phone,
+        "email": email,
+        "message": message
+    })
+
+    return jsonify({"message": "Contact submitted successfully"}), 200
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000, debug=True)
