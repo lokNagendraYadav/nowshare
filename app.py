@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 from pymongo import MongoClient
 
 app = Flask(__name__)
-client = MongoClient("mongodb+srv://portfolio:Mischief%402411@cluster0.nuugfcv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+client = MongoClient("mongodb+srv://portfolio:9b27srQGiUplZuYq@cluster0.uzvxhqz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client["portfolio"]
 contact_collection = db["contacts"]
 
