@@ -178,3 +178,35 @@ function observeQRDisplay() {
 
   observer.observe(scanSection, { childList: true, subtree: true });
 }
+
+//contact
+
+document.getElementById('contact-form').addEventListener('submit', async function (e) {
+  e.preventDefault(); // stop form from submitting normally
+
+  const form = e.target;
+  const formData = {
+    name: form.name.value,
+    phone: form.phone.value,
+    email: form.email.value,
+    message: form.message.value
+  };
+
+  try {
+    const response = await fetch('/submit_contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    const result = await response.json();
+
+    document.getElementById('response-message').innerText = result.message;
+    form.reset(); // clear form
+  } catch (err) {
+    document.getElementById('response-message').innerText = 'Failed to submit. Please try again.';
+  }
+});
+
