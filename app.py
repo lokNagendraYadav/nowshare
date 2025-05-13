@@ -5,6 +5,7 @@ import qrcode
 from io import BytesIO
 import base64
 from werkzeug.utils import secure_filename
+from pymongo import MongoClient
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
