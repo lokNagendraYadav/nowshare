@@ -121,14 +121,21 @@ def get_history():
 #contact info
 @app.route('/submit_contact', methods=['POST'])
 def submit_contact():
-    name = request.form.get('name')
-    phone = request.form.get('phone')
-    email = request.form.get('email')
-    message = request.form.get('message')
+    data = request.get_json()  # Accepts JSON payload
+
+    if not data:
+        return jsonify({"message": "Invalid data"}), 400
+
+    # Extract data from the JSON payload
+    name = data.get('name')
+    phone = data.get('phone')
+    email = data.get('email')
+    message = data.get('message')
 
     if not all([name, phone, email, message]):
-        return "All fields are required", 400
+        return jsonify({"message": "All fields are required"}), 400
 
+    # Insert data into MongoDB
     contact_collection.insert_one({
         "name": name,
         "phone": phone,
@@ -137,6 +144,7 @@ def submit_contact():
     })
 
     return jsonify({"message": "Contact submitted successfully"}), 200
+
 
 
 if __name__ == '__main__':
