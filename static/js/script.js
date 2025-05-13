@@ -181,32 +181,35 @@ function observeQRDisplay() {
 
 //contact
 
-document.getElementById('contact-form').addEventListener('submit', async function (e) {
-  e.preventDefault(); // stop form from submitting normally
 
-  const form = e.target;
-  const formData = {
-    name: form.name.value,
-    phone: form.phone.value,
-    email: form.email.value,
-    message: form.message.value
-  };
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('contact-form');
 
-  try {
-    const response = await fetch('/submit_contact', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    });
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-    const result = await response.json();
+    const formData = {
+      name: form.name.value,
+      phone: form.phone.value,
+      email: form.email.value,
+      message: form.message.value
+    };
 
-    document.getElementById('response-message').innerText = result.message;
-    form.reset(); // clear form
-  } catch (err) {
-    document.getElementById('response-message').innerText = 'Failed to submit. Please try again.';
-  }
+    try {
+      const res = await fetch('/submit_contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const result = await res.json();
+      document.getElementById('response-message').innerText = result.message;
+      form.reset();
+    } catch (err) {
+      document.getElementById('response-message').innerText = 'Submission failed.';
+    }
+  });
 });
 
