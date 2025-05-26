@@ -243,6 +243,13 @@ button.copied {
 #history tr:nth-child(even) {
   background-color: #fafafa;
 }
+.history-filename {
+  white-space: nowrap;       /* Keep text in a single line */
+  overflow: hidden;          /* Hide the overflow */
+  text-overflow: ellipsis;   /* Add ... at the end */
+  max-width: 100%;           /* Prevent overflow from the container */
+  display: inline-block;     /* Needed for ellipsis */
+}
 
 /* FOOTER */
 .contact-container {
