@@ -244,9 +244,11 @@ button.copied {
   background-color: #fafafa;
 }
 .history-filename {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  white-space: normal;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
 }
 
 /* FOOTER */
