@@ -41,7 +41,9 @@ background-color:#222; color:white; padding:20px; border-radius:8px; z-index:999
   <div id="scan">
     <div id="qrCodeSection">
       <h2>QR Code</h2>
-      <img id="qrCodeImage" src="" alt="QR Code" />
+      <img id="qrCodeImage" src="data:image/png;base64,..." alt="QR Code" />
+      <button id="shareBtn">Share QR Code</button>
+
       <p>Transfer Code: <span id="transferCode"></span></p>
       <button id="copyCodeButton" onclick="copyCode()">Copy Code</button>
     </div>
