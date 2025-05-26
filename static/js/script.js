@@ -55,11 +55,24 @@ async function downloadFile() {
         return;
     }
 
+    // Show popup with downloading message
+    const popup = document.getElementById("uploadPopup");
+    const popupTextNode = popup.querySelector(".popup-message");
+    const tickIcon = document.getElementById("successTick");
+
+    if (popupTextNode) {
+        popupTextNode.textContent = "Your file is being downloaded...";
+    }
+    popup.style.display = "block";
+    document.getElementById("progressContainer").style.display = "none";
+    if (tickIcon) tickIcon.style.display = "none";
+
     try {
         const response = await fetch(`/download/${code}`);
         if (!response.ok) {
             const errorText = await response.text();
             alert("Error: " + errorText);
+            popup.style.display = "none";
             return;
         }
 
@@ -83,12 +96,29 @@ async function downloadFile() {
         a.remove();
         window.URL.revokeObjectURL(url);
 
-        // After successful download, update the history dynamically
         await updateHistory();
+
+        // Update popup message to show success
+        if (popupTextNode) {
+            popupTextNode.textContent = "Your file has been downloaded";
+        }
+        if (tickIcon) {
+            tickIcon.style.display = "block";
+            tickIcon.classList.add("animate-tick");
+        }
+
+        // Auto-close popup after 3 seconds
+        setTimeout(() => {
+            popup.style.display = "none";
+            tickIcon.classList.remove("animate-tick");
+        }, 5000);
+
     } catch (error) {
         alert("Download failed: " + error);
+        popup.style.display = "none";
     }
 }
+
 //update histroy
 async function updateHistory() {
     try {
