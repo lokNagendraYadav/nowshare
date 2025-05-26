@@ -1,6 +1,7 @@
 async function uploadFile() {
     document.getElementById("uploadPopup").style.display = "block";
-observeQRDisplay();  // to monitor QR visibility
+    document.getElementById("progressContainer").style.display = "block"; // show progress circle
+    observeQRDisplay();  // to monitor QR visibility
 
     const fileInput = document.getElementById("fileInput");
     if (!fileInput.files.length) {
@@ -12,30 +13,41 @@ observeQRDisplay();  // to monitor QR visibility
     formData.append("file", fileInput.files[0]);
 
     try {
-        const response = await fetch("/upload", {
-            method: "POST",
-            body: formData,
+        const xhr = new XMLHttpRequest();
+
+        xhr.upload.addEventListener("progress", function (e) {
+            if (e.lengthComputable) {
+                const percent = Math.round((e.loaded / e.total) * 100);
+                const offset = 282.6 - (282.6 * percent) / 100;
+                document.getElementById("progressBar").style.strokeDashoffset = offset;
+                document.getElementById("progressText").textContent = `${percent}%`;
+            }
         });
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            alert("Upload failed: " + errorText);
-            return;
-        }
+        xhr.onreadystatechange = async function () {
+            if (xhr.readyState === 4) {
+                document.getElementById("uploadPopup").style.display = "none";
 
-        const data = await response.json();
-        document.getElementById("transferCode").innerText = data.code;
-        document.getElementById("qrCodeImage").src = data.qr_code_url;
-        startCountdown(600); // Start 10-minute countdown
+                if (xhr.status === 200) {
+                    const data = JSON.parse(xhr.responseText);
+                    document.getElementById("transferCode").innerText = data.code;
+                    document.getElementById("qrCodeImage").src = data.qr_code_url;
+                    startCountdown(600); // Start 10-minute countdown
+                    updateHistory();
+                    showScanPopup();
+                } else {
+                    alert("Upload failed: " + xhr.responseText);
+                }
+            }
+        };
 
-        // Update the history dynamically
-        updateHistory();
-
-        showScanPopup();
+        xhr.open("POST", "/upload", true);
+        xhr.send(formData);
     } catch (error) {
         alert("Upload failed: " + error);
     }
 }
+
 
 async function downloadFile() {
     const code = document.getElementById("codeInput").value.trim();
