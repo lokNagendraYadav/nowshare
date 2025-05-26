@@ -244,11 +244,9 @@ button.copied {
   background-color: #fafafa;
 }
 .history-filename {
-  white-space: nowrap;       /* Keep text in a single line */
-  overflow: hidden;          /* Hide the overflow */
-  text-overflow: ellipsis;   /* Add ... at the end */
-  max-width: 100%;           /* Prevent overflow from the container */
-  display: inline-block;     /* Needed for ellipsis */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 /* FOOTER */
