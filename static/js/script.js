@@ -212,4 +212,29 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+//share qr
+document.getElementById('shareBtn').addEventListener('click', async () => {
+  const qrImg = document.getElementById('qrImage'); // your <img id="qrImage"> tag
+  const dataUrl = qrImg.src;
+
+  // Convert base64 to blob
+  const res = await fetch(dataUrl);
+  const blob = await res.blob();
+  const file = new File([blob], 'qr-code.png', { type: 'image/png' });
+
+  // Use Web Share API if supported
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try {
+      await navigator.share({
+        title: 'NowShare QR Code',
+        text: 'Scan this to download your file:',
+        files: [file],
+      });
+    } catch (error) {
+      alert('Sharing canceled or failed.');
+    }
+  } else {
+    alert('Sharing is not supported on this device/browser.');
+  }
+});
 
