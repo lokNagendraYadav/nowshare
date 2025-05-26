@@ -374,3 +374,8 @@ button.copied {
     font-size: 1rem;
   }
 }
+//progress bar
+#progressCircle {
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
