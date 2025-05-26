@@ -56,40 +56,72 @@ async function downloadFile() {
         return;
     }
 
+    document.getElementById("uploadPopup").style.display = "block";
+    document.getElementById("progressContainer").style.display = "block";
+    document.getElementById("progressBar").style.strokeDashoffset = 282.6;
+    document.getElementById("progressText").textContent = "0%";
+    document.getElementById("uploadPopup").childNodes[0].textContent = "Your file is being downloaded...";
+
     try {
-        const response = await fetch(`/download/${code}`);
-        if (!response.ok) {
-            const errorText = await response.text();
-            alert("Error: " + errorText);
-            return;
-        }
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", `/download/${code}`, true);
+        xhr.responseType = "blob";
 
-        const blob = await response.blob();
-        const contentDisposition = response.headers.get('Content-Disposition');
-        let filename = 'downloaded_file';
-
-        if (contentDisposition) {
-            const match = contentDisposition.match(/filename="?(.+)"?/);
-            if (match && match[1]) {
-                filename = match[1];
+        xhr.onprogress = function (e) {
+            if (e.lengthComputable) {
+                const percent = Math.round((e.loaded / e.total) * 100);
+                const offset = 282.6 - (282.6 * percent) / 100;
+                document.getElementById("progressBar").style.strokeDashoffset = offset;
+                document.getElementById("progressText").textContent = `${percent}%`;
             }
-        }
+        };
 
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
+        xhr.onload = async function () {
+            document.getElementById("uploadPopup").style.display = "none";
 
-        // After successful download, update the history dynamically
-        await updateHistory();
+            if (xhr.status === 200) {
+                const blob = xhr.response;
+                const disposition = xhr.getResponseHeader('Content-Disposition');
+                let filename = 'downloaded_file';
+
+                if (disposition) {
+                    const match = disposition.match(/filename="?(.+)"?/);
+                    if (match && match[1]) {
+                        filename = match[1];
+                    }
+                }
+
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+
+                await updateHistory(); // same as original
+            } else {
+                const reader = new FileReader();
+                reader.onload = function () {
+                    alert("Error: " + reader.result);
+                };
+                reader.readAsText(xhr.response);
+            }
+        };
+
+        xhr.onerror = function () {
+            document.getElementById("uploadPopup").style.display = "none";
+            alert("Download failed.");
+        };
+
+        xhr.send();
     } catch (error) {
+        document.getElementById("uploadPopup").style.display = "none";
         alert("Download failed: " + error);
     }
 }
+
 //update histroy
 async function updateHistory() {
     try {
