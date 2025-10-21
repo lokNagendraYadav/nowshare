@@ -222,6 +222,7 @@ button.copied {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.95rem;
+  table-layout: fixed;
 }
 
 #history th {
@@ -248,7 +249,7 @@ button.copied {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  display: inline-block;
+  display: block;
 }
 
 /* FOOTER */
