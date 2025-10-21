@@ -248,7 +248,7 @@ button.copied {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  display: block;
+  display: inline-block;
 }
 
 /* FOOTER */
