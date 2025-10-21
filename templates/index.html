@@ -67,26 +67,30 @@ background-color:#222; color:white; padding:20px; border-radius:8px; z-index:999
 
   <!--histroy-->
   <div id="history">
-    <p><h2>History</h2><br>Reload for getting the detailes</p>
-    <table>
-      <thead>
-        <tr>
-          <th>Sender IP</th>
-          <th>Receiver IP</th>
-          <th>File</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for entry in history %}
-        <tr>
-          <td>{{ entry.sender_ip }}</td>
-          <td>{{ entry.receiver_ip }}</td>
-          <td>{{ entry.filename }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+  <p>
+    <h2>History</h2><br>
+    Reload for getting the details
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Sender IP</th>
+        <th>Receiver IP</th>
+        <th>File</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in history %}
+      <tr>
+        <td>{{ entry.sender_ip }}</td>
+        <td>{{ entry.receiver_ip }}</td>
+        <td class="history-filename">{{ entry.filename }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
 
   <!--footer-->
   <div class="contact-container">
